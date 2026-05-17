@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>숨결 Freedive</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav" aria-label="주요 메뉴">
+        <a class="brand" href="#top" aria-label="숨결 Freedive 홈">
+          <span class="brand-mark">숨</span>
+          <span>숨결 Freedive</span>
+        </a>
+        <div class="nav-links">
+          <a href="#training">훈련</a>
+          <a href="#logbook">로그북</a>
+          <a href="#safety">안전</a>
+        </div>
+      </nav>
+
+      <section id="top" class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">프리다이빙을 더 안전하고 꾸준하게</p>
+          <h1>숨 참기 훈련부터 다이빙 기록까지 한 곳에서 관리하세요.</h1>
+          <p class="hero-text">
+            숨결 Freedive는 CO₂ 테이블, 개인 로그북, 버디 체크리스트를 제공하는
+            프리다이버를 위한 간단한 웹앱입니다.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#training">오늘 훈련 시작</a>
+            <a class="button secondary" href="#logbook">다이빙 기록하기</a>
+          </div>
+        </div>
+        <aside class="stat-card" aria-label="오늘의 요약">
+          <p>오늘의 컨디션</p>
+          <strong id="todayStatus">준비 완료</strong>
+          <span>버디와 함께, 절대 혼자 잠수하지 마세요.</span>
+        </aside>
+      </section>
+    </header>
+
+    <main>
+      <section class="section cards" aria-label="앱 주요 기능">
+        <article class="feature-card">
+          <span class="icon">🌬️</span>
+          <h2>호흡 훈련</h2>
+          <p>워크/휴식 인터벌을 설정하고 현재 단계와 남은 시간을 큰 화면으로 확인합니다.</p>
+        </article>
+        <article class="feature-card">
+          <span class="icon">📘</span>
+          <h2>다이빙 로그</h2>
+          <p>수심, 시간, 장소, 느낌을 저장하고 최근 기록을 브라우저에 안전하게 보관합니다.</p>
+        </article>
+        <article class="feature-card">
+          <span class="icon">🤝</span>
+          <h2>버디 안전</h2>
+          <p>입수 전 핵심 체크 항목을 빠르게 확인해 위험한 단독 다이빙을 예방합니다.</p>
+        </article>
+      </section>
+
+      <section id="training" class="section app-panel training-panel">
+        <div>
+          <p class="eyebrow">CO₂ TABLE TIMER</p>
+          <h2>숨 참기 인터벌 타이머</h2>
+          <p class="muted">초 단위로 준비, 숨 참기, 회복 시간을 설정하세요. 훈련은 편안한 곳에서 버디와 함께 진행하세요.</p>
+        </div>
+
+        <form id="timerForm" class="timer-form">
+          <label>
+            준비 시간(초)
+            <input id="prepSeconds" type="number" min="5" max="300" value="30" />
+          </label>
+          <label>
+            숨 참기(초)
+            <input id="holdSeconds" type="number" min="5" max="600" value="60" />
+          </label>
+          <label>
+            회복 시간(초)
+            <input id="restSeconds" type="number" min="5" max="300" value="45" />
+          </label>
+          <label>
+            라운드
+            <input id="rounds" type="number" min="1" max="12" value="4" />
+          </label>
+          <button class="button primary" type="submit">타이머 시작</button>
+          <button class="button ghost" id="resetTimer" type="button">초기화</button>
+        </form>
+
+        <div class="timer-display" aria-live="polite">
+          <span id="timerPhase">대기 중</span>
+          <strong id="timerClock">00:00</strong>
+          <p id="timerRound">훈련 설정 후 시작하세요.</p>
+        </div>
+      </section>
+
+      <section id="logbook" class="section app-panel">
+        <div>
+          <p class="eyebrow">PERSONAL LOGBOOK</p>
+          <h2>다이빙 로그북</h2>
+          <p class="muted">기록은 현재 브라우저의 localStorage에 저장됩니다.</p>
+        </div>
+
+        <form id="logForm" class="log-form">
+          <label>
+            날짜
+            <input id="diveDate" type="date" required />
+          </label>
+          <label>
+            장소
+            <input id="diveSite" type="text" placeholder="예: 제주 김녕" required />
+          </label>
+          <label>
+            최대 수심(m)
+            <input id="depth" type="number" min="0" step="0.1" placeholder="18.5" required />
+          </label>
+          <label>
+            다이브 시간(초)
+            <input id="duration" type="number" min="1" placeholder="75" required />
+          </label>
+          <label class="full-width">
+            메모
+            <textarea id="notes" rows="3" placeholder="컨디션, 장비, 배운 점을 남겨보세요."></textarea>
+          </label>
+          <button class="button primary" type="submit">로그 저장</button>
+        </form>
+
+        <div class="log-header">
+          <h3>최근 기록</h3>
+          <button class="button ghost" id="clearLogs" type="button">전체 삭제</button>
+        </div>
+        <ul id="logList" class="log-list" aria-live="polite"></ul>
+      </section>
+
+      <section id="safety" class="section app-panel safety-panel">
+        <div>
+          <p class="eyebrow">SAFETY FIRST</p>
+          <h2>입수 전 안전 체크리스트</h2>
+          <p class="muted">모든 항목을 확인해도 전문 교육과 현장 판단을 대체할 수 없습니다.</p>
+        </div>
+        <div class="checklist" id="checklist">
+          <label><input type="checkbox" /> 자격 있는 버디와 역할, 구조 신호를 확인했다.</label>
+          <label><input type="checkbox" /> 오늘의 컨디션, 수면, 수분 섭취 상태가 양호하다.</label>
+          <label><input type="checkbox" /> 수온, 조류, 시야, 보트 동선을 확인했다.</label>
+          <label><input type="checkbox" /> 웨이트, 랜야드, 부이, 라인 등 장비를 점검했다.</label>
+          <label><input type="checkbox" /> 목표 수심과 중단 기준을 버디와 합의했다.</label>
+        </div>
+        <p id="safetyStatus" class="safety-status">0/5 완료</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 숨결 Freedive · 교육받은 환경에서 안전하게 즐기세요.</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
